@@ -25,15 +25,15 @@ readonly regex="${ARGS[<regex>]}"
 readonly stage_files="${ARGS[--add]}"
 
 case "${stage_files}" in
-    true)
-        git diff -U0 \
-            | grepdiff -E "${regex}" --output-matching=hunk \
-            | git apply --cached --unidiff-zero
-    ;;
+  true)
+    git diff -U0 \
+      | grepdiff -E "${regex}" --output-matching=hunk \
+      | git apply --cached --unidiff-zero
+  ;;
 
-    false)
-        git diff -U0 \
-            | grepdiff -E "${regex}" --output-matching=hunk \
-            | "$(git var GIT_PAGER)"
-    ;;
+  false)
+    git diff -U0 \
+      | grepdiff -E "${regex}" --output-matching=hunk \
+      | "$(git var GIT_PAGER)"
+  ;;
 esac
