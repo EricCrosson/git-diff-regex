@@ -11,15 +11,20 @@
     };
   };
 
-  outputs = { self, nixpkgs, flake-utils, pre-commit-hooks }: (
-    flake-utils.lib.eachDefaultSystem (system:
-      let
+  outputs = {
+    self,
+    nixpkgs,
+    flake-utils,
+    pre-commit-hooks,
+  }: (
+    flake-utils.lib.eachDefaultSystem (
+      system: let
         pkgs = import nixpkgs {
           inherit system;
         };
         name = "git-diff-regex";
-        scriptBuildInputs = with pkgs; [ docopts git patchutils ];
-        script = (pkgs.writeScriptBin name (builtins.readFile ./git-diff-regex.sh)).overrideAttrs(old: {
+        scriptBuildInputs = with pkgs; [git patchutils];
+        script = (pkgs.writeScriptBin name (builtins.readFile ./git-diff-regex.sh)).overrideAttrs (old: {
           buildCommand = "${old.buildCommand}\n patchShebangs $out";
         });
         checks = {
@@ -39,8 +44,8 @@
         };
         packages.default = pkgs.symlinkJoin {
           inherit name;
-          paths = [ script ] ++ scriptBuildInputs;
-          buildInputs = [ pkgs.makeWrapper ];
+          paths = [script] ++ scriptBuildInputs;
+          buildInputs = [pkgs.makeWrapper];
           postBuild = "wrapProgram $out/bin/${name}";
         };
       }
