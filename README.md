@@ -21,11 +21,4 @@ It helps you stage specific hunks from a set of unstaged changes, which in turn 
 #
 # @example
 # git diff-regex --add foobar
-
-Usage:
- git-diff-regex [-a] <regex>
-
-Options:
-  -a --add    Add matches to the staging area
-  <regex>     Regex used to select hunks from the working tree
 ```
