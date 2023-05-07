@@ -19,4 +19,4 @@ jobs:
       - name: Install Nix
         uses: DeterminateSystems/nix-installer-action@v2
 
-      - run: nix flake check
+      - run: nix flake check ./nix
