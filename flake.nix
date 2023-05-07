@@ -39,21 +39,11 @@
       };
     });
 
-    packages = forEachSystem (system: let
-      pkgs = import nixpkgs {
-        inherit system;
-      };
-      name = "git-diff-regex";
-      scriptBuildInputs = with pkgs; [git patchutils];
-      script = (pkgs.writeScriptBin name (builtins.readFile ./git-diff-regex.sh)).overrideAttrs (old: {
-        buildCommand = "${old.buildCommand}\n patchShebangs $out";
-      });
-    in {
-      default = pkgs.symlinkJoin {
-        inherit name;
-        paths = [script] ++ scriptBuildInputs;
-        buildInputs = [pkgs.makeWrapper];
-        postBuild = "wrapProgram $out/bin/${name}";
+    packages = forEachSystem (system: {
+      default = nixpkgs.legacyPackages.${system}.writeShellApplication {
+        name = "git-diff-regex";
+        runtimeInputs = with nixpkgs.legacyPackages.${system}; [git patchutils];
+        text = builtins.readFile ./git-diff-regex.sh;
       };
     });
   };
