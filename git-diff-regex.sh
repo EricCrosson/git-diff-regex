@@ -35,7 +35,7 @@ EOF
 stage_files=false
 regex=""
 
-while [ "${1:-}" != "" ]; do
+while [[ ${1:-} != "" ]]; do
   case "$1" in
   -a | --add)
     stage_files=true
@@ -55,12 +55,12 @@ done
 # Validate arguments
 validation_errors=false
 
-if [ -z "$regex" ]; then
+if [[ -z $regex ]]; then
   echo >&2 "Error: must supply <regex>"
   validation_errors=true
 fi
 
-if [ "$validation_errors" == true ]; then
+if [[ $validation_errors == true ]]; then
   usage
   exit 1
 fi
