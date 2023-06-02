@@ -36,7 +36,7 @@ stage_files=false
 regex=""
 
 while [[ ${1:-} != "" ]]; do
-  case "$1" in
+  case $1 in
   -a | --add)
     stage_files=true
     shift # past arg
@@ -46,7 +46,7 @@ while [[ ${1:-} != "" ]]; do
     exit 1
     ;;
   *)
-    regex="$1"
+    regex=$1
     shift # past value
     ;;
   esac
@@ -66,16 +66,16 @@ if [[ $validation_errors == true ]]; then
 fi
 
 main() {
-  case "${stage_files}" in
+  case "$stage_files" in
   true)
     git diff -U0 |
-      grepdiff -E "${regex}" --output-matching=hunk |
+      grepdiff -E "$regex" --output-matching=hunk |
       git apply --cached --unidiff-zero
     ;;
 
   false)
     git diff -U0 |
-      grepdiff -E "${regex}" --output-matching=hunk |
+      grepdiff -E "$regex" --output-matching=hunk |
       "$(git var GIT_PAGER)"
     ;;
   esac
