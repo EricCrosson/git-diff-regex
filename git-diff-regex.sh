@@ -76,7 +76,7 @@ main() {
   false)
     git diff -U0 |
       grepdiff -E "$regex" --output-matching=hunk |
-      "$(git var GIT_PAGER)"
+      eval "$(git var GIT_PAGER)"
     ;;
   esac
 }
