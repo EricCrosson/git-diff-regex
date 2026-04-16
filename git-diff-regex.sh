@@ -75,7 +75,7 @@ main() {
 
   false)
     pager=$(git config pager.diff 2>/dev/null || git var GIT_PAGER)
-    git diff --color=always -U0 |
+    git diff -U0 |
       grepdiff -E "$regex" --output-matching=hunk |
       eval "$pager"
     ;;
