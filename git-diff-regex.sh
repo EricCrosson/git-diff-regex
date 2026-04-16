@@ -74,7 +74,7 @@ main() {
     ;;
 
   false)
-    git diff -U0 |
+    git diff --color=always -U0 |
       grepdiff -E "$regex" --output-matching=hunk |
       eval "$(git var GIT_PAGER)"
     ;;
